@@ -1,4 +1,5 @@
 ---
+import {Navbar} from "../components/Navbar"
 interface Props {
 	title: string;
 }
@@ -7,7 +8,7 @@ const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Astro description" />
@@ -17,9 +18,34 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<div id="app" class="grid grid-cols-shortAside xl:grid-cols-longAside grid-rows-1 h-screen w-screen bg-white">
+			<aside class="bg-black px-3 pt-2 pb-5 overflow-hidden border-r border-neutral-700">
+				<Navbar/>
+			</aside>
+			<main class="bg-black">
+				<div class="flex flex-col">
+					<div class="storiesContainer w-full h-[101px] mt-4 py-2 flex gap-2 overflow-x-hidden touch-pan-x overscroll-contain snap-proximity scroll-smooth">
+						{Array(30).fill(1).map((x, i) => 
+							<div class="stories relative w-[66px] grid grid-rows-storiesProfile">
+								<div class="bg-white w-[66px] h-[66px] rounded-full">
+								</div>
+								<label class="text-white text-xs text-center truncate w-full"> 
+									Usuario_{i}
+								</label>
+							</div>
+						)}
+						
+					</div>
+					<div class="publications bg-cyan-200 h-[1500px] w-full mb-5">
+						
+					</div>
+				</div>
+			</main>
+		</div>
 		<slot />
 	</body>
 </html>
+
 <style is:global>
 	:root {
 		--accent: 136, 58, 234;
@@ -47,5 +73,21 @@ const { title } = Astro.props;
 			Bitstream Vera Sans Mono,
 			Courier New,
 			monospace;
+	}
+
+	.storiesContainer {
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	.storiesContainer::-webkit-scrollbar {
+		display: none;
+	}
+
+	main {
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	main::-webkit-scrollbar {
+		display: none;
 	}
 </style>
